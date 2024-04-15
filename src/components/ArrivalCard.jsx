@@ -12,7 +12,7 @@ import {
 
 export default function ArrivalCard({ product }) {
   return (
-    <div className="w-full px-4 mb-4 group">
+    <div className="w-[270px] px-4 mb-4 group ">
       <Dialog>
         <div className="text-center relative">
           {/* Badge tag */}
