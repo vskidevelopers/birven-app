@@ -13,6 +13,7 @@ export const mockData = [
       "The Treadmill XT-2000 is the perfect addition to your home gym setup. With its sturdy build and advanced features, you can enjoy a smooth and efficient workout every time.",
     ratings: 4.5,
     category: "Equipment",
+    new: true,
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ export const mockData = [
       "Our delicious Chocolate Protein Powder is packed with essential nutrients to help you build muscle and recover faster after workouts. Made with high-quality ingredients for optimal results.",
     ratings: 4.8,
     category: "Supplements",
+    new: true,
   },
   {
     id: 3,
@@ -132,6 +134,7 @@ export const mockData = [
       "Our Vanilla Whey Protein Isolate is the perfect post-workout recovery drink. With a smooth texture and delicious flavor, it's a convenient way to replenish your muscles and support muscle growth.",
     ratings: 4.9,
     category: "Supplements",
+    new: true,
   },
   {
     id: 10,
@@ -162,6 +165,7 @@ export const mockData = [
       "Our Omega-3 Fish Oil capsules provide essential fatty acids to support heart health, brain function, and joint mobility. Made from wild-caught fish and third-party tested for purity.",
     ratings: 4.8,
     category: "Supplements",
+    new: true,
   },
   {
     id: 12,
@@ -192,6 +196,7 @@ export const mockData = [
       "Our Chocolate Casein Protein Powder is designed to support muscle recovery and growth during sleep. Made with slow-digesting protein and essential amino acids, it's the perfect bedtime snack for athletes.",
     ratings: 4.7,
     category: "Supplements",
+    new: true,
   },
   {
     id: 14,
@@ -222,6 +227,7 @@ export const mockData = [
       "Our Fruit Punch BCAA Powder is formulated to support muscle recovery and hydration during and after workouts. With a delicious taste and essential amino acids, it's the perfect supplement for athletes.",
     ratings: 4.9,
     category: "Supplements",
+    new: true,
   },
   {
     id: 16,
@@ -237,6 +243,7 @@ export const mockData = [
       "Our Adjustable Weighted Vest - 20kg adds resistance to your workouts for increased intensity and calorie burn. With adjustable weight settings and a comfortable design, it's perfect for all fitness levels.",
     ratings: 4.7,
     category: "Equipment",
+    new: true,
   },
   {
     id: 17,
@@ -252,6 +259,7 @@ export const mockData = [
       "Our Fruit Punch Creatine Monohydrate is designed to enhance strength, power, and endurance for improved athletic performance. Made with high-quality ingredients and no fillers.",
     ratings: 4.7,
     category: "Supplements",
+    new: true,
   },
   {
     id: 18,
@@ -281,6 +289,7 @@ export const mockData = [
       "Our Raspberry Lemonade BCAA Capsules are convenient and easy to take on the go. Designed to support muscle recovery and hydration, they're perfect for busy athletes.",
     ratings: 4.8,
     category: "Supplements",
+    new: true,
   },
   {
     id: 20,
@@ -296,5 +305,6 @@ export const mockData = [
       "Our Adjustable Kettlebell - 20kg offers versatile training options with adjustable weight settings. Perfect for swings, squats, and other kettlebell exercises.",
     ratings: 4.7,
     category: "Equipment",
+    new: true,
   },
 ];

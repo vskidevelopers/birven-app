@@ -20,7 +20,7 @@ export default function ArrivalCard({ product }) {
             Sale
           </div>
 
-          {/* Product image */}
+          {/* Product imageUrl */}
           <img
             className="max-w-full h-auto"
             src={product.imageUrl}
@@ -46,7 +46,7 @@ export default function ArrivalCard({ product }) {
               <li className="flex items-center m-0 p-0">
                 <Link
                   className="font-normal py-2 px-4 rounded border border-transparent transition duration-300 text-white bg-black text-sm"
-                  to={`/detail/${product.id}`}
+                  to={`/shop/${product.id}`}
                 >
                   Ksh {product.price}
                 </Link>
@@ -63,15 +63,15 @@ export default function ArrivalCard({ product }) {
         {/* Product details */}
         <div>
           <h6>
-            <Link className="reset-anchor" to={`/detail/${product.id}`}>
+            <DialogTrigger className="reset-anchor">
               {product.name}
-            </Link>
+            </DialogTrigger>
           </h6>
           <p className="small font-mono"></p>
         </div>
         <DialogContent>
           <div className="flex">
-            {/* Image */}
+            {/* ImageUrl */}
             <div className="w-1/2">
               <img
                 className="max-w-full h-auto"

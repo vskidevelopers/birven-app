@@ -25,6 +25,7 @@ export default function QuotationDivider() {
   const onSubmit = (data) => {
     // Handle form submission and quote request here
     console.log("data from form >> ", data);
+    reset();
   };
 
   return (

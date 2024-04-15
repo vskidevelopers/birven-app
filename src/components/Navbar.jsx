@@ -12,8 +12,13 @@ const navigation = [
   { name: "Birven", href: "/", current: true },
   { name: "About us", href: "/about", current: false },
   { name: "Shop", href: "/shop", current: false },
-  { name: "Contact", href: "#", current: false },
+  { name: "Contact", href: "/", current: false },
 ];
+
+const handleLogin = (e) => {
+  e.preventDefault();
+  alert("Admin side is currently under Maintenance");
+};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -97,15 +102,15 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={handleLogin}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             Login
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

@@ -1,6 +1,12 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
 export default function Newsletter() {
+  const { register, handleSubmit, errors } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <div>
       <div className=" pr-20 pl-0 ">
@@ -31,17 +37,27 @@ export default function Newsletter() {
             <h2 className="text-semibold text-3xl md:text-4xl  font-serif mb-3">
               NEWSLETTER
             </h2>
-            <div className="flex flex-col gap-6 w-full items-center">
-              <input
-                type="email"
-                placeholder="Type Your Email... "
-                className="border-b border-emerald-400 focus:outline-none focus:border-blue-500 bg-transparent w-3/5 py-4"
-              />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {/* Your form inputs */}
 
-              <button className="w-1/2 py-3 px-5 md:px-9 ml-3 rounded-full text-emerald-500  border border-emerald-500 hover:bg-emerald-600 transition duration-500 ease-in-out hover:text-white font-bold text-center">
-                Submit
-              </button>
-            </div>
+              <div className="flex flex-col gap-6 w-full items-center">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Type Your Email... "
+                  ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                  className="border-b border-emerald-400 focus:outline-none focus:border-blue-500 bg-transparent w-3/5 py-4"
+                />
+                {errors.email && <span>Email is required</span>}
+
+                <button
+                  type="submit"
+                  className="w-1/2 py-3 px-5 md:px-9 ml-3 rounded-full text-emerald-500  border border-emerald-500 hover:bg-emerald-600 transition duration-500 ease-in-out hover:text-white font-bold text-center"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default function ShopGrid() {
         </div>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {mockData?.map((data, i) => (
+          {currentItems?.map((data, i) => (
             <div key={i}>
               <ArrivalCard product={data} />
             </div>

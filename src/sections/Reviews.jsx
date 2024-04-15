@@ -32,8 +32,10 @@ export default function Reviews() {
             </div>
             <div className="text-center my-3">
               <p className="font-serif text-xl md:text-2xl">
-                “This place is great! I had a very pleasant stay here. Great
-                stuff and beautiful suites with a fabulous view”
+                “Top-notch customer experience! From browsing the website to
+                delivery, everything was smooth and efficient. The equipment
+                arrived in perfect condition, and I'm thrilled with my
+                purchase.”
               </p>
             </div>
 
@@ -55,8 +57,9 @@ export default function Reviews() {
             </div>
             <div className="text-center my-3">
               <p className="font-serif text-xl md:text-2xl ">
-                “Been there with my family. Beautiful place, definitely
-                recommended. Children also enjoyed it very much”
+                “Great variety and excellent service! I found everything I
+                needed for my home gym setup at this store. The staff were
+                knowledgeable and helped me make the right choices”
               </p>
             </div>
 
@@ -79,8 +82,9 @@ export default function Reviews() {
             </div>
             <div className="text-center my-3">
               <p className="font-serif text-xl md:text-2xl">
-                “This place is great! I had a very pleasant stay here. Great
-                stuff and beautiful suites with a fabulous view”!
+                “Exceptional quality equipment! I purchased a treadmill from
+                this store, and I'm blown away by its durability and
+                performance. Highly recommended!”!
               </p>
             </div>
 

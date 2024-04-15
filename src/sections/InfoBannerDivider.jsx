@@ -15,13 +15,13 @@ export default function InfoBannerDivider() {
       description:
         "Explore our range of gym equipments, maintenance services, and more.",
       buttonText: "Shop Now",
-      buttonLink: "/products",
+      buttonLink: "/shop",
     },
     {
       title: "Contact Us",
       description: "Get in touch with us for any inquiries or assistance.",
       buttonText: "Contact Us",
-      buttonLink: "/contact",
+      buttonLink: "#",
     },
   ];
   return (

@@ -11,6 +11,7 @@ export const FooterContactForm = () => {
     setLoading(true);
     console.log("Data from form >>", data);
     setLoading(false);
+    reset();
   };
 
   return (

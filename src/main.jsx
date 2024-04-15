@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import HomeLayout from "./layouts/HomeLayout";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
+import ProductDetail from "./pages/ProductDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
         <Route path="about" element={<About />} />
+        <Route path="shop/:id" element={<ProductDetail />} />
       </Route>
     </Route>
   )
