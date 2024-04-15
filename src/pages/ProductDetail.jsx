@@ -41,9 +41,12 @@ export default function ProductDetail() {
           <p>This product has no reviews yet!</p>
         </div>
 
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Add to Cart
-        </button>
+        <Link
+          to="/shop"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Back to shop
+        </Link>
         <br />
       </div>
       <Footer />
