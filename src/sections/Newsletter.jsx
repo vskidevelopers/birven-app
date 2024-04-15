@@ -1,7 +1,8 @@
-import React from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Newsletter() {
+  const form = useRef();
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -37,7 +38,11 @@ export default function Newsletter() {
             <h2 className="text-semibold text-3xl md:text-4xl  font-serif mb-3">
               NEWSLETTER
             </h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              className="w-full"
+              ref={form}
+              onSubmit={handleSubmit(onSubmit)}
+            >
               {/* Your form inputs */}
 
               <div className="flex flex-col gap-6 w-full items-center">
@@ -45,10 +50,10 @@ export default function Newsletter() {
                   type="email"
                   name="email"
                   placeholder="Type Your Email... "
-                  ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                  {...register("email")}
                   className="border-b border-emerald-400 focus:outline-none focus:border-blue-500 bg-transparent w-3/5 py-4"
                 />
-                {errors.email && <span>Email is required</span>}
+                {errors?.email && <span>Email is required</span>}
 
                 <button
                   type="submit"
