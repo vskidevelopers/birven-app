@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const product = mockData[id];
+  const product = mockData[id - 1];
   return (
     <>
       <div className="container mx-auto px-4 py-8 mt-16">
