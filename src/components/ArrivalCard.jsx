@@ -11,6 +11,11 @@ import {
 } from "@/components/ui/dialog";
 
 export default function ArrivalCard({ product }) {
+  const handleAddToWish = () => {
+    alert(
+      "You are view a demo version of the store. WishList is not yet active"
+    );
+  };
   return (
     <div className="w-[270px] px-4 mb-4 group ">
       <Dialog>
@@ -35,12 +40,12 @@ export default function ArrivalCard({ product }) {
             <ul className="mb-0 flex justify-around">
               {/* Favorite */}
               <li className="flex items-center m-0 px-1 hover:text-white ">
-                <Link
+                <buton
+                  onClick={handleAddToWish}
                   className="font-normal py-2 px-3 border-2 border-black hover:rounded hover:bg-black group-hover:text-white transition duration-300 text-black bg-transparent text-sm hover:text-white "
-                  to="/"
                 >
                   <HeartIcon className="w-4 h-auto text-black hover:text-white  " />
-                </Link>
+                </buton>
               </li>
               {/* Product name */}
               <li className="flex items-center m-0 p-0">
