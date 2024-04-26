@@ -4,11 +4,11 @@ import logo from "../assets/BirvenLogo.svg";
 import { Link } from "react-router-dom";
 import CheckListItem from "./CheckListItem";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
-import { FooterContactForm } from "./ContactForm";
 import CopyRightSection from "../sections/CopyRightSection";
 import FacebookIcon from "@/assets/icons/Facebook";
 import InstagramIcon from "@/assets/icons/Instagram";
 import TwitterIcon from "@/assets/icons/Twitter";
+import RatingsandReviews from "./RatingsandReviews";
 
 export default function Footer() {
   const links = [
@@ -124,8 +124,8 @@ export default function Footer() {
 
             {/* Column 4 - Contact Us Form */}
             <div>
-              <h4 className="text-xl font-bold mb-4">Talk to us</h4>
-              <FooterContactForm />
+              <h4 className="text-xl font-bold mb-4">Leave Feedback</h4>
+              <RatingsandReviews />
             </div>
           </div>
         </div>

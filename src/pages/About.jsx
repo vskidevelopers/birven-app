@@ -11,11 +11,11 @@ export default function About() {
       <HeroSection
         tagline="Build On Teamwork"
         title="About us"
-        image="https://images.pexels.com/photos/1181415/pexels-photo-1181415.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        image="https://st.depositphotos.com/1110663/2303/i/450/depositphotos_23032654-stock-photo-gym-room.jpg"
       />
       <div className="py-16 relative">
         <div className="container mx-auto px-5 md:px-20">
-          <div className="initial md:absolute -top-32 left-10 container">
+          <div className="initial md:absolute -top-32 right-2 container">
             <div className=" flex flex-col md:flex-row justify-between gap gap-3">
               <FloatingCards
                 basis="basis-1/4"

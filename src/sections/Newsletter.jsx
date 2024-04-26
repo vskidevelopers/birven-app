@@ -1,12 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Newsletter() {
   const form = useRef();
-  const { register, handleSubmit, errors } = useForm();
-
+  const { register, handleSubmit, errors, reset } = useForm();
+  const [loading, setLoading] = useState(false);
   const onSubmit = (data) => {
+    setLoading(true);
     console.log(data);
+    setTimeout(() => {
+      setLoading(false);
+      reset();
+    }, 1000);
   };
   return (
     <div>

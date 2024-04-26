@@ -12,6 +12,12 @@ import HomeLayout from "./layouts/HomeLayout";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import ProductDetail from "./pages/ProductDetail";
+import AdminLayout from "./layouts/admin/AdminLayout";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import Login from "./auth/Login";
+import { AuthProvider } from "./auth/AuthContext";
+import PrivateRoutes from "./auth/PrivateRoutes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,12 +27,24 @@ const router = createBrowserRouter(
         <Route path="shop" element={<Shop />} />
         <Route path="about" element={<About />} />
         <Route path="shop/:id" element={<ProductDetail />} />
+        <Route path="login" element={<Login />} />
+      </Route>
+      {/* Admin-Related Routes */}
+      <Route element={<PrivateRoutes />}>
+        <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          {/* <Route path="orders" element={<AdminOrders />} /> */}
+          {/* <Route path="orders" element={<AdminOrders />} /> */}
+        </Route>
       </Route>
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

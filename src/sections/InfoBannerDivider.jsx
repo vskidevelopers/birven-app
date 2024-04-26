@@ -8,7 +8,7 @@ export default function InfoBannerDivider() {
       description:
         "Welcome to Birven supplies. We fully deliver on Gym equipments, machine maintenance and machine service.",
       buttonText: "Read More",
-      buttonLink: "/about-us",
+      buttonLink: "/about",
     },
     {
       title: "Products & Services",

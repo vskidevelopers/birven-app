@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -7,24 +7,50 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import miniLogo from "../assets/BirvenMiniLogo.svg";
-
-const navigation = [
-  { name: "Birven", href: "/", current: true },
-  { name: "About us", href: "/about", current: false },
-  { name: "Shop", href: "/shop", current: false },
-  { name: "Contact", href: "/", current: false },
-];
-
-const handleLogin = (e) => {
-  e.preventDefault();
-  alert("Admin side is currently under Maintenance");
-};
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { auth, useAuthenticationFunctions } from "@/firebase/firbase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Navbar() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const navigation = [
+    { name: "Birven", href: "/", current: true },
+    { name: "About us", href: "/about", current: false },
+    { name: "Shop", href: "/shop", current: false },
+    { name: "Contact", href: "/", current: false },
+  ];
+  const navigate = useNavigate();
+  const { logout } = useAuthenticationFunctions();
+
+  const handleLogout = async () => {
+    try {
+      console.log("logging out ...");
+      await logout();
+      setIsAuthenticated(false);
+      navigate("/", { replace: true });
+    } catch (error) {
+      alert("an error occured  while logging you out! try again after a while");
+      console.log("the following error occured during logout", error);
+    }
+  };
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <Disclosure as="nav" className="fixed top-0 z-50 w-full bg-gray-800">
       {({ open }) => (
@@ -100,19 +126,50 @@ export default function Navbar() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={handleLogin}
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                      {isAuthenticated ? (
+                        <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={handleLogout}
+                                className={classNames(
+                                  active ? "w-full bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700 text-start"
+                                )}
+                              >
+                                Logout
+                              </button>
                             )}
-                          >
-                            Login
-                          </button>
-                        )}
-                      </Menu.Item>
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/admin"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Admin
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        </>
+                      ) : (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/login"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Login
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>

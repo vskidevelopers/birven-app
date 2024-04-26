@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArrivalCard from "../components/ArrivalCard";
 import { mockData } from "@/utils/mockProducts";
 
@@ -9,9 +9,23 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useProductFunctions } from "@/firebase/firbase";
 
 export default function NewArrivals() {
-  const newArrivals = mockData.filter((product) => product.new === true);
+  const [newArrivals, setNewArrivals] = useState([]);
+  const filter = "new";
+  const { fetchFilteredStatusProducts } = useProductFunctions();
+
+  const fetchNewArrivals = async () => {
+    const newArrivalProducts = await fetchFilteredStatusProducts(filter);
+    console.log("new-arrivals >> ", newArrivalProducts);
+    setNewArrivals(newArrivalProducts?.products);
+  };
+
+  useEffect(() => {
+    fetchNewArrivals();
+  }, []);
+
   return (
     <div className=" container mx-auto px-10 py-20">
       <div className="flex flex-col items-center w-sceen text-center">

@@ -12,9 +12,7 @@ import {
 
 export default function ArrivalCard({ product }) {
   const handleAddToWish = () => {
-    alert(
-      "You are view a demo version of the store. WishList is not yet active"
-    );
+    alert("WishList is not yet active");
   };
   return (
     <div className="w-[270px] px-4 mb-4 group ">
@@ -22,13 +20,13 @@ export default function ArrivalCard({ product }) {
         <div className="text-center relative">
           {/* Badge tag */}
           <div className="absolute top-1 right-2 z-30 bg-[#dcb14a] uppercase py-1 px-2 text-white">
-            Sale
+            {product?.status === "none" ? "" : product?.status}
           </div>
 
-          {/* Product imageUrl */}
+          {/* Product image */}
           <img
             className="max-w-full h-auto"
-            src={product.imageUrl}
+            src={product.image}
             alt="Product"
           />
 
@@ -76,11 +74,11 @@ export default function ArrivalCard({ product }) {
         </div>
         <DialogContent>
           <div className="flex">
-            {/* ImageUrl */}
+            {/* image */}
             <div className="w-1/2">
               <img
                 className="max-w-full h-auto"
-                src={product.imageUrl}
+                src={product.image}
                 alt="Product"
               />
             </div>

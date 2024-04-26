@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import ArrivalCard from "./ArrivalCard";
 import Pagination from "./Pagination";
 import { mockData } from "../utils/mockProducts";
+import { useProductFunctions } from "@/firebase/firbase";
 
 export default function ShopGrid() {
+  const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -11,8 +13,26 @@ export default function ShopGrid() {
 
   const itemsPerPage = 9;
 
+  const { fetchAllProducts } = useProductFunctions();
+  const fetchAllProductsInStore = async () => {
+    setLoading(true);
+    try {
+      const fetchAllProductsResponse = await fetchAllProducts();
+      console.log("fetch_all_products_response >> ", fetchAllProductsResponse);
+      setItems(fetchAllProductsResponse?.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("error_response_fetching_all_products >> ", error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setItems(mockData);
+    console.log("fetching_all_products_in_store_initilized ... ");
+    fetchAllProductsInStore();
+  }, []);
+
+  useEffect(() => {
     try {
       const endOffset = itemOffset + itemsPerPage;
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -48,7 +68,7 @@ export default function ShopGrid() {
         <div>
           <div className="w-full flex justify-end my-4">
             <Pagination
-              items={mockData}
+              items={items}
               pageCount={pageCount}
               setItemOffset={setItemOffset}
               itemsPerPage={itemsPerPage}

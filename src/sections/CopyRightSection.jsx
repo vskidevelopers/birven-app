@@ -16,14 +16,14 @@ export default function CopyRightSection() {
           <div className="flex w-1/2 justify-end">
             <p>
               Branded by{" "}
-              <a
-                href="#"
+              <Link
+                to="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white underline"
               >
                 DusstechBrands
-              </a>
+              </Link>
             </p>
           </div>
         </div>
