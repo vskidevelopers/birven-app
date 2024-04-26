@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import Login from "./auth/Login";
 import { AuthProvider } from "./auth/AuthContext";
 import PrivateRoutes from "./auth/PrivateRoutes";
+import AdminQuotations from "./pages/admin/AdminQuotations";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,7 +35,7 @@ const router = createBrowserRouter(
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
-          {/* <Route path="orders" element={<AdminOrders />} /> */}
+          <Route path="quotations" element={<AdminQuotations />} />
           {/* <Route path="orders" element={<AdminOrders />} /> */}
         </Route>
       </Route>

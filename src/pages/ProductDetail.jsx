@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import QuotationForm from "@/components/QuotationForm";
+import QuotationForm from "@/components/PrimaryQuotationForm";
 
 export default function ProductDetail() {
   const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ export default function ProductDetail() {
           <img
             src={product.image}
             alt={product.name}
-            className="my-4 rounded-lg  object-contain"
+            className="my-4 rounded-lg  object-contain w-full"
           />
         </div>
         <div className="w-full lg:w-1/2">
@@ -90,7 +90,7 @@ export default function ProductDetail() {
                     Enter your details and we&apos;ll reach back
                   </DialogTitle>
                   <DialogDescription>
-                    <QuotationForm />
+                    <QuotationForm product={product} />
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>

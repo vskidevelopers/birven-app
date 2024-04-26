@@ -43,6 +43,7 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 
+// PRODUCTS
 export const useProductFunctions = () => {
   const [productImageUploadProgress, setProductImageUploadProgress] =
     useState(0);
@@ -51,7 +52,7 @@ export const useProductFunctions = () => {
 
   //  x fetch all products
   //  x addProduct
-  //    delete product
+  //  x delete product
   //  x update Product
   //    search by name or category
   //  x handle imageUpload
@@ -329,4 +330,66 @@ export const useAuthenticationFunctions = () => {
     login,
     logout,
   };
+};
+
+// QUOTATIONS
+export const useQuotationFunctions = () => {
+  //    addQuotationsbyType (gen/pri)
+  //    decline/fullfill pending Quotations
+  //    fetchSingleQuotation
+  //    getAllQuotationsbyType (general/primary)
+  //    getAllQuotations
+
+  const addQuotation = async (data) => {
+    const quotationType = data?.type;
+    const quotationCollectionRef = collection(
+      db,
+      "Quotations",
+      quotationType,
+      quotationType
+    );
+    try {
+      const newQuotationRef = doc(quotationCollectionRef);
+      await setDoc(newQuotationRef, data);
+      return { success: true, message: "Quotation added successfully" };
+    } catch (error) {
+      return { success: false, message: "Failed to add the Quotation" };
+    }
+  };
+
+  const getAllQuotationsbyType = async (quotationType) => {
+    const quotationCollectionRef = collection(
+      db,
+      "Quotations",
+      quotationType,
+      quotationType
+    );
+    const quotationQuery = query(quotationCollectionRef);
+
+    const quotationSnapshot = await getDocs(quotationQuery);
+
+    if (quotationSnapshot?.empty) {
+      console.log("No quotation exists in the selected Category");
+      return {
+        success: false,
+        data: [],
+        message: `No quotation exists in the selected Category >> ${quotationType}`,
+      };
+    } else {
+      console.log(
+        "quotationSnapShot from fetchQuotation >> ",
+        quotationSnapshot
+      );
+      const quotationData = quotationSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: quotationData,
+        message: "quotations exists in the selected category",
+      };
+    }
+  };
+  return { addQuotation, getAllQuotationsbyType };
 };

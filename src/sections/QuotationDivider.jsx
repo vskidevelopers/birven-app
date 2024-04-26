@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useState, Fragment, useRef } from "react";
-import QuotationForm from "@/components/QuotationForm";
+import QuotationForm from "@/components/GeneralQuotationForm";
 
 export default function QuotationDivider() {
   let [isOpen, setIsOpen] = useState(false);

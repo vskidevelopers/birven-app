@@ -1,22 +1,56 @@
+import { useQuotationFunctions } from "@/firebase/firbase";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function QuotationForm() {
+export default function QuotationForm({ product }) {
   const [loading, setLoading] = useState(false);
   const form = useRef();
+  const { addQuotation } = useQuotationFunctions();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const currentDate = new Date();
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short",
+  };
 
-  const onSubmit = (data) => {
+  const formattedDate = currentDate.toLocaleString("en-US", options);
+
+  const onSubmit = async (data) => {
     setLoading(true);
+    const primaryQuotationData = {
+      ...data,
+      type: "primary",
+      createdAt: formattedDate,
+      status: "pending",
+      productId: product?.id,
+      productName: product?.name,
+    };
     // Handle form submission and quote request here
-    console.log("data from form >> ", data);
-    reset();
-    setLoading(false);
+    console.log("data from form >> ", primaryQuotationData);
+    try {
+      const addPrimaryQuotationResponse = await addQuotation(
+        primaryQuotationData
+      );
+      console.log(
+        "add_primary_quotation_response >> ",
+        addPrimaryQuotationResponse
+      );
+      reset();
+      setLoading(false);
+    } catch (error) {
+      console.error("An error occurred: ", error);
+      setLoading(false);
+    }
   };
   return (
     <div>
@@ -70,7 +104,10 @@ export default function QuotationForm() {
         </div>
         <div className="mb-4">
           <label htmlFor="message" className="block text-sm font-bold mb-2">
-            Message:
+            Message{" "}
+            <span className="text-xs text-gray-600  font-bold">
+              *what would you like to know about {product?.name}*
+            </span>
           </label>
           <textarea
             name="message"
