@@ -16,22 +16,6 @@ export const mockData = [
     new: true,
   },
   {
-    id: 2,
-    name: "Protein Powder - Chocolate",
-    price: 49,
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSU7xJVLMB31TnpijStyn0_sZkJYvrMIP1HYFirnQdg&s",
-    tags: ["protein", "supplements", "nutrition"],
-    instaLink: "https://instagram.com/examplenutrition",
-    fbLink: "https://facebook.com/examplenutrition",
-    twitterLink: "https://twitter.com/examplenutrition",
-    description:
-      "Our delicious Chocolate Protein Powder is packed with essential nutrients to help you build muscle and recover faster after workouts. Made with high-quality ingredients for optimal results.",
-    ratings: 4.8,
-    category: "Supplements",
-    new: true,
-  },
-  {
     id: 3,
     name: "Dumbbell Set - 20kg",
     price: 99,
