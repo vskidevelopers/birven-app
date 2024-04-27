@@ -39,7 +39,7 @@ import {
 import { useQuotationFunctions } from "@/firebase/firbase";
 import { useEffect, useState } from "react";
 import QuotationStatusBadge from "@/components/QuotationStatusBadge";
-export default function AdminQuotations() {
+export default function AdminReviews() {
   const [loading, setLoading] = useState(false);
   const [fulFilledLoading, setFulFilledLoading] = useState(false);
   const [declinedLoading, setDeclinedLoading] = useState(false);
@@ -51,7 +51,7 @@ export default function AdminQuotations() {
   const { getAllQuotationsbyType, updateQuotationStatusId } =
     useQuotationFunctions();
 
-  const handleGetQuotations = async () => {
+  const handleGetReviews = async () => {
     const primaryQuotationsData = await getAllQuotationsbyType("primary");
     const generalQuotationsData = await getAllQuotationsbyType("general");
     const allQuotations = primaryQuotationsData?.data.concat(
@@ -71,7 +71,7 @@ export default function AdminQuotations() {
   }, []);
 
   // Render Table
-  const renderAllQuotations = () => {
+  const renderAllReviews = () => {
     console.log("all_quotations >> ", allQuotations);
     if (loading) {
       return (
@@ -170,7 +170,7 @@ export default function AdminQuotations() {
       ));
     }
   };
-  const renderPrimaryQuotations = () => {
+  const renderApprovedReviews = () => {
     console.log("primary_quotations >> ", primaryQuotations);
     if (loading) {
       return (
@@ -269,7 +269,7 @@ export default function AdminQuotations() {
       ));
     }
   };
-  const renderGeneralQuotations = () => {
+  const renderRejectedReviews = () => {
     console.log("general_quotations >> ", generalQuotations);
     if (loading) {
       return (
@@ -370,9 +370,9 @@ export default function AdminQuotations() {
   };
 
   // update Quotations
-  const handleMarkAsFulFilled = async (id, type) => {
+  const handleApproveReview = async (id, type) => {
     setFulFilledLoading(true);
-    const status = "fulfilled";
+    const status = "approved";
     try {
       const updateQuotationStatusResponse = await updateQuotationStatusId(
         id,
@@ -392,9 +392,9 @@ export default function AdminQuotations() {
       setFulFilledLoading(false);
     }
   };
-  const handleMarkAsDeclined = async (id, type) => {
+  const handleRejectReview = async (id, type) => {
     setDeclinedLoading(true);
-    const status = "declined";
+    const status = "rejected";
     try {
       const updateQuotationStatusResponse = await updateQuotationStatusId(
         id,
@@ -414,29 +414,6 @@ export default function AdminQuotations() {
       setDeclinedLoading(false);
     }
   };
-  const handleMarkAsRefunded = async (id, type) => {
-    console.log("quotation_id >> ", id);
-    setRefundedLoading(true);
-    const status = "refunded";
-    try {
-      const updateQuotationStatusResponse = await updateQuotationStatusId(
-        id,
-        status,
-        type
-      );
-      console.log(
-        "update_quotation_status_response >> ",
-        updateQuotationStatusResponse
-      );
-      if (updateQuotationStatusResponse?.success) {
-        alert("successfully updated the status of this quotation");
-      }
-      setRefundedLoading(false);
-    } catch (error) {
-      console.log("an err aoccured trying to mark quotation as refunded");
-      setRefundedLoading(false);
-    }
-  };
 
   return (
     <div>
@@ -444,15 +421,15 @@ export default function AdminQuotations() {
         <div className="flex items-center">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="primary">Primary</TabsTrigger>
-            <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="approved">Approved</TabsTrigger>
+            <TabsTrigger value="rejected">Rejected</TabsTrigger>
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
               className="h-8 gap-1"
-              onClick={handleGetQuotations}
+              onClick={handleGetReviews}
             >
               <RefreshCcwDot className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -467,10 +444,8 @@ export default function AdminQuotations() {
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
-            <CardTitle>Quotations</CardTitle>
-            <CardDescription>
-              Recent quotation requests from your store.
-            </CardDescription>
+            <CardTitle>Reviews</CardTitle>
+            <CardDescription>Recent reviews from your store.</CardDescription>
           </CardHeader>
           <CardContent>
             <TabsContent value="all">
@@ -478,7 +453,9 @@ export default function AdminQuotations() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Customer</TableHead>
-                    <TableHead className="hidden sm:table-cell">Type</TableHead>
+                    <TableHead className="hidden sm:table-cell">
+                      Ratings
+                    </TableHead>
                     <TableHead className="hidden sm:table-cell">
                       Status
                     </TableHead>
@@ -489,7 +466,7 @@ export default function AdminQuotations() {
                 <TableBody>{renderAllQuotations()}</TableBody>
               </Table>
             </TabsContent>
-            <TabsContent value="primary">
+            <TabsContent value="approved">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -502,10 +479,10 @@ export default function AdminQuotations() {
                     <TableHead className="sr-only">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>{renderPrimaryQuotations()}</TableBody>
+                <TableBody>{renderApprovedReviews()}</TableBody>
               </Table>
             </TabsContent>
-            <TabsContent value="general">
+            <TabsContent value="rejected">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -518,7 +495,7 @@ export default function AdminQuotations() {
                     <TableHead className="sr-only">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>{renderGeneralQuotations()}</TableBody>
+                <TableBody>{renderRejectedReviews()}</TableBody>
               </Table>
             </TabsContent>
           </CardContent>

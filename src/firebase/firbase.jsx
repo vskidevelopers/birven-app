@@ -391,5 +391,43 @@ export const useQuotationFunctions = () => {
       };
     }
   };
-  return { addQuotation, getAllQuotationsbyType };
+
+  const updateQuotationStatusId = async (id, status, quotationType) => {
+    console.log(`quotation_id : ${id} ||  Status : ${status}`);
+    const quotationCollectionRef = doc(
+      db,
+      "Quotations",
+      quotationType,
+      quotationType,
+      id
+    );
+    try {
+      const quotationToUpdateSnapShot = await getDoc(quotationCollectionRef);
+      if (quotationToUpdateSnapShot.exists()) {
+        console.log(
+          "quotation_found_and_ready_for_update >> ",
+          quotationToUpdateSnapShot
+        );
+        await updateDoc(quotationCollectionRef, {
+          status: status,
+        });
+        return {
+          success: true,
+          message: "Quotation updated Successfully",
+          status: status,
+        };
+      }
+    } catch (error) {
+      console.log("error occured trying to update a quotation");
+      return {
+        success: false,
+        message: "Failed to update the Quotation",
+        error: error,
+      };
+    }
+  };
+  return { addQuotation, getAllQuotationsbyType, updateQuotationStatusId };
 };
+
+// REVIEWS
+export const useReviewsFunctions = () => {};
