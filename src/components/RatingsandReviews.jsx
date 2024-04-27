@@ -2,10 +2,12 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { StarIcon as SolidStarIcon } from "@heroicons/react/24/solid";
 import { StarIcon as OutlineStarIcon } from "@heroicons/react/24/outline";
+import { useReviewsFunctions } from "@/firebase/firbase";
 export default function RatingsAndReviewsForm() {
   const form = useRef();
   const [rating, setRating] = useState(0); // Current rating selected
   const [loading, setLoading] = useState(false);
+  const { addReviews } = useReviewsFunctions();
   const {
     register,
     handleSubmit,
@@ -16,21 +18,39 @@ export default function RatingsAndReviewsForm() {
   const handleStarClick = (star) => {
     setRating(star);
   };
+  const currentDate = new Date();
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short",
+  };
 
-  const onSubmit = (data) => {
+  const formattedDate = currentDate.toLocaleString("en-US", options);
+
+  const onSubmit = async (data) => {
     // Add the current rating to the form data
     data.rating = rating;
+    const dataToUse = { ...data, status: "pending", createdAt: formattedDate };
 
     // Submit ratings and reviews logic goes here
     setLoading(true);
-    console.log("Data from form >>", data);
-
-    // Simulate async operation
-    setTimeout(() => {
-      setLoading(false);
+    console.log("Data from form >>", dataToUse);
+    try {
+      const addReviewResponse = await addReviews(dataToUse);
+      if (addReviewResponse?.success) {
+        console.log("add_review_response >> ", addReviewResponse);
+        alert(addReviewResponse.message);
+      }
       reset();
+      setLoading(false);
       setRating(0);
-    }, 1000);
+    } catch (error) {
+      console.error("an error occurred >> ", error);
+    }
   };
 
   return (
@@ -46,14 +66,14 @@ export default function RatingsAndReviewsForm() {
               type="text"
               {...register("name", { required: true })}
               className="
-                mt-0
-                block
-                w-full
-                px-0.5
-                border-0 border-b-2 border-gray-200
-                focus:ring-0 focus:border-[#22c55e]
-                bg-white text-gray-600
-              "
+                  mt-0
+                  block
+                  w-full
+                  px-0.5
+                  border-0 border-b-2 border-gray-200
+                  focus:ring-0 focus:border-[#22c55e]
+                  bg-white text-gray-600
+                "
               placeholder="Your Name"
             />
             {errors.name && (
@@ -65,14 +85,14 @@ export default function RatingsAndReviewsForm() {
               type="email"
               {...register("email", { required: true })}
               className="
-                mt-0
-                block
-                w-full
-                px-0.5
-                border-0 border-b-2 border-gray-200
-                focus:ring-0 focus:border-[#22c55e]
-                bg-white text-gray-600
-              "
+                  mt-0
+                  block
+                  w-full
+                  px-0.5
+                  border-0 border-b-2 border-gray-200
+                  focus:ring-0 focus:border-[#22c55e]
+                  bg-white text-gray-600
+                "
               placeholder="Your Email"
             />
             {errors.email && (
@@ -102,14 +122,14 @@ export default function RatingsAndReviewsForm() {
               {...register("review", { required: true })}
               placeholder="Leave your review here..."
               className="
-                mt-0
-                block
-                w-full
-                px-0.5
-                border-0 border-b-2 border-gray-200
-                focus:ring-0 focus:border-[#22c55e]
-                bg-white text-gray-600
-              "
+                  mt-0
+                  block
+                  w-full
+                  px-0.5
+                  border-0 border-b-2 border-gray-200
+                  focus:ring-0 focus:border-[#22c55e]
+                  bg-white text-gray-600
+                "
             ></textarea>
             {errors.review && (
               <span className="text-red-500">Review is required</span>

@@ -22,6 +22,7 @@ import {
 
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useState } from "react";
+import Reviews from "@/sections/Reviews";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -430,4 +431,114 @@ export const useQuotationFunctions = () => {
 };
 
 // REVIEWS
-export const useReviewsFunctions = () => {};
+export const useReviewsFunctions = () => {
+  const addReviews = async (data) => {
+    const reviewsCollectionRef = collection(db, "Reviews");
+    try {
+      const newReviewRef = doc(reviewsCollectionRef);
+      await setDoc(newReviewRef, data);
+      return { success: true, message: "Review added successfully" };
+    } catch (error) {
+      return { success: false, message: "Failed to add the Review" };
+    }
+  };
+
+  const getAllReviews = async () => {
+    const reviewsCollectionRef = collection(db, "Reviews");
+
+    const reviewsSnapshot = await getDocs(reviewsCollectionRef);
+
+    if (reviewsSnapshot?.empty) {
+      console.log("No review exists in the selected ");
+      return {
+        success: false,
+        data: [],
+        message: `No quotation exists in the selected Category >> ${quotationType}`,
+      };
+    } else {
+      console.log("reviewsSnapShot from fetchQuotation >> ", reviewsSnapshot);
+      const reviewsData = reviewsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: reviewsData,
+        message: "reviews exists in the selected category",
+      };
+    }
+  };
+
+  const updateReviewStatusId = async (id, status) => {
+    console.log(`review_id : ${id} ||  Status : ${status}`);
+    const reviewsCollectionRef = doc(
+      db,
+      "Reviews",
+
+      id
+    );
+    try {
+      const reviewToUpdateSnapShot = await getDoc(reviewsCollectionRef);
+      if (reviewToUpdateSnapShot.exists()) {
+        console.log(
+          "review_found_and_ready_for_update >> ",
+          reviewToUpdateSnapShot
+        );
+        await updateDoc(reviewsCollectionRef, {
+          status: status,
+        });
+        return {
+          success: true,
+          message: "Review updated Successfully",
+          status: status,
+        };
+      }
+    } catch (error) {
+      console.log("error occured trying to update a review");
+      return {
+        success: false,
+        message: "Failed to update the Review",
+        error: error,
+      };
+    }
+  };
+
+  const getAllReviewsbyStatus = async (status) => {
+    const reviewsCollectionRef = collection(db, "Reviews");
+    const reviewsCollectionQuery = query(
+      reviewsCollectionRef,
+      where("status", "==", status)
+    );
+    try {
+      const reviewToUpdateSnapShot = await getDocs(reviewsCollectionQuery);
+      console.log(
+        "review_found_and_ready_for_update >> ",
+        reviewToUpdateSnapShot
+      );
+      const reviewsSnapShotData = reviewToUpdateSnapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        message: "Review updated Successfully",
+        status: status,
+        data: reviewsSnapShotData,
+      };
+    } catch (error) {
+      console.log("error occured trying to Fecth a reviews");
+      return {
+        success: false,
+        message: "Failed to get the Reviews",
+        error: error,
+        data: null,
+      };
+    }
+  };
+  return {
+    addReviews,
+    getAllReviews,
+    updateReviewStatusId,
+    getAllReviewsbyStatus,
+  };
+};

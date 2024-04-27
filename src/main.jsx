@@ -19,6 +19,7 @@ import Login from "./auth/Login";
 import { AuthProvider } from "./auth/AuthContext";
 import PrivateRoutes from "./auth/PrivateRoutes";
 import AdminQuotations from "./pages/admin/AdminQuotations";
+import AdminReviews from "./pages/admin/AdminReviews";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="quotations" element={<AdminQuotations />} />
-          {/* <Route path="orders" element={<AdminOrders />} /> */}
+          <Route path="reviews" element={<AdminReviews />} />
         </Route>
       </Route>
     </Route>

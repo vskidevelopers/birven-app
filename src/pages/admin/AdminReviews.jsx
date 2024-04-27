@@ -36,76 +36,74 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useQuotationFunctions } from "@/firebase/firbase";
+import { useReviewsFunctions } from "@/firebase/firbase";
 import { useEffect, useState } from "react";
-import QuotationStatusBadge from "@/components/QuotationStatusBadge";
+import ReviewsStatusBadge from "@/components/ReviewsStatusBadge";
 export default function AdminReviews() {
   const [loading, setLoading] = useState(false);
-  const [fulFilledLoading, setFulFilledLoading] = useState(false);
+  const [approvedLoading, setApprovedLoading] = useState(false);
   const [declinedLoading, setDeclinedLoading] = useState(false);
-  const [refundedLoading, setRefundedLoading] = useState(false);
-  const [allQuotations, setAllQuotations] = useState([]);
-  const [generalQuotations, setGeneralQuotations] = useState([]);
-  const [primaryQuotations, setPrimaryQuotations] = useState([]);
+  const [allReviews, setAllReviews] = useState([]);
+  const [approvedReviews, setApprovedReviews] = useState([]);
+  const [rejectedReviews, setRejectedReviews] = useState([]);
 
-  const { getAllQuotationsbyType, updateQuotationStatusId } =
-    useQuotationFunctions();
+  const { getAllReviews, getAllReviewsbyStatus, updateReviewStatusId } =
+    useReviewsFunctions();
 
   const handleGetReviews = async () => {
-    const primaryQuotationsData = await getAllQuotationsbyType("primary");
-    const generalQuotationsData = await getAllQuotationsbyType("general");
-    const allQuotations = primaryQuotationsData?.data.concat(
-      generalQuotationsData?.data
-    );
+    const approvedReviewsData = await getAllReviewsbyStatus("approved");
+    const rejectedReviewsData = await getAllReviewsbyStatus("rejected");
+    const allReviews = await getAllReviews();
+    console.log("setting_reviews_to_state ...");
 
-    console.log("setting_quotations_to_state ...");
-
-    setAllQuotations(allQuotations);
-    setGeneralQuotations(generalQuotationsData?.data);
-    setPrimaryQuotations(primaryQuotationsData?.data);
-    console.log("allQuotations >> ", allQuotations);
+    setAllReviews(allReviews?.data);
+    setApprovedReviews(approvedReviewsData?.data);
+    setRejectedReviews(rejectedReviewsData?.data);
+    console.log("all_reviews >> ", allReviews);
+    console.log("rejected_reviews >> ", rejectedReviewsData);
+    console.log("approved_reviews >> ", approvedReviewsData);
   };
 
   useEffect(() => {
-    handleGetQuotations();
+    handleGetReviews();
   }, []);
 
   // Render Table
   const renderAllReviews = () => {
-    console.log("all_quotations >> ", allQuotations);
+    console.log("all_reviews >> ", allReviews);
     if (loading) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            Fetching Quotations. Please wait...
+            Fetching Reviews. Please wait...
           </TableCell>
         </TableRow>
       );
-    } else if (!allQuotations || allQuotations?.length === 0) {
+    } else if (!allReviews || allReviews?.length === 0) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            No quotation in store
+            No reviews in store
           </TableCell>
         </TableRow>
       );
     } else {
-      return allQuotations?.map((quotation, index) => (
+      return allReviews?.map((review, index) => (
         <TableRow>
           <TableCell>
-            <div className="font-medium">{quotation?.full_name}</div>
+            <div className="font-medium">{review?.full_name}</div>
             <div className="hidden text-sm text-muted-foreground md:inline">
-              {quotation?.email}
+              {review?.email}
             </div>
           </TableCell>
           <TableCell className="hidden sm:table-cell">
-            {quotation?.type}
+            {review?.rating}
           </TableCell>
           <TableCell className="hidden sm:table-cell">
-            <QuotationStatusBadge status={quotation?.status} />
+            <ReviewsStatusBadge status={review?.status} />
           </TableCell>
           <TableCell className="hidden md:table-cell">
-            {quotation?.createdAt}
+            {review?.createdAt}
           </TableCell>
           <TableCell className="text-right">
             <Dialog>
@@ -117,50 +115,39 @@ export default function AdminReviews() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Quotation No #{quotation?.id}</DialogTitle>
+                  <DialogTitle>review No #{review?.id}</DialogTitle>
                 </DialogHeader>
                 <div className="p-4 bg-gray-200 rounded-lg max-h-80 overflow-y-auto">
                   <p className="mb-2 font-semibold">ID:</p>
-                  <p className="mb-2 font-bold">{quotation?.id}</p>
-                  <p className="mb-2 font-semibold">Phone Number:</p>
-                  <p className="mb-2 font-bold">{quotation?.phone_number}</p>
+                  <p className="mb-2 font-bold">{review?.id}</p>
+
                   <p className="mb-2 font-semibold">Status:</p>
-                  <p className="mb-2 font-bold">{quotation?.status}</p>
+                  <p className="mb-2 font-bold">{review?.status}</p>
                   <p className="mb-2 font-semibold">Message:</p>
-                  <p className="mb-2 font-bold">{quotation?.message}</p>
+                  <p className="mb-2 font-bold">{review?.message}</p>
                   <p className="mb-2 font-semibold">Created At:</p>
-                  <p className="mb-2 font-bold">{quotation?.createdAt}</p>
+                  <p className="mb-2 font-bold">{review?.createdAt}</p>
                   <p className="mb-2 font-semibold">Email:</p>
-                  <p className="mb-2 font-bold">{quotation?.email}</p>
+                  <p className="mb-2 font-bold">{review?.email}</p>
                   <p className="mb-2 font-semibold">Full Name:</p>
-                  <p className="mb-2 font-bold">{quotation?.full_name}</p>
-                  <p className="mb-2 font-semibold">Type:</p>
-                  <p className="mb-2 font-bold">{quotation?.type}</p>
+                  <p className="mb-2 font-bold">{review?.full_name}</p>
+                  <p className="mb-2 font-semibold">Ratings:</p>
+                  <p className="mb-2 font-bold">{review?.rating}</p>
                 </div>
-                <div className="my-4 flex justify-between">
+                <div className="my-4 flex justify-around ">
                   <button
                     onClick={() =>
-                      handleMarkAsFulFilled(quotation?.id, quotation?.type)
+                      handleApproveReview(review?.id, review?.type)
                     }
-                    className="bg-none border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
+                    className="bg-none w-1/3 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {fulFilledLoading ? "loading ..." : "Mark as Fulfilled"}
+                    {approvedLoading ? "loading ..." : "Approve"}
                   </button>
                   <button
-                    onClick={() =>
-                      handleMarkAsDeclined(quotation?.id, quotation?.type)
-                    }
-                    className="bg-none border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
+                    onClick={() => handleRejectReview(review?.id, review?.type)}
+                    className="bg-none w-1/3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {declinedLoading ? "loading ..." : "Mark as Declined"}
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleMarkAsRefunded(quotation?.id, quotation?.type)
-                    }
-                    className="bg-none border border-green-500 text-green-500 hover:bg-green-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
-                  >
-                    {refundedLoading ? "loading ..." : "Mark as Refunded"}
+                    {declinedLoading ? "loading ..." : "Reject"}
                   </button>
                 </div>
               </DialogContent>
@@ -171,40 +158,38 @@ export default function AdminReviews() {
     }
   };
   const renderApprovedReviews = () => {
-    console.log("primary_quotations >> ", primaryQuotations);
+    console.log("approved_reviews >> ", approvedReviews);
     if (loading) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            Fetching Quotations. Please wait...
+            Fetching Reviews. Please wait...
           </TableCell>
         </TableRow>
       );
-    } else if (!primaryQuotations || primaryQuotations?.length === 0) {
+    } else if (!approvedReviews || approvedReviews?.length === 0) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            No quotation in store
+            No review in store
           </TableCell>
         </TableRow>
       );
     } else {
-      return primaryQuotations.map((quotation, index) => (
+      return approvedReviews.map((review, index) => (
         <TableRow>
           <TableCell>
-            <div className="font-medium">{quotation?.full_name}</div>
+            <div className="font-medium">{review?.full_name}</div>
             <div className="hidden text-sm text-muted-foreground md:inline">
-              {quotation?.email}
+              {review?.email}
             </div>
           </TableCell>
+          <TableCell className="hidden sm:table-cell">{review?.type}</TableCell>
           <TableCell className="hidden sm:table-cell">
-            {quotation?.type}
-          </TableCell>
-          <TableCell className="hidden sm:table-cell">
-            <QuotationStatusBadge status={quotation?.status} />
+            <ReviewsStatusBadge status={review?.status} />
           </TableCell>
           <TableCell className="hidden md:table-cell">
-            {quotation?.createdAt}
+            {review?.createdAt}
           </TableCell>
           <TableCell className="text-right">
             <Dialog>
@@ -216,50 +201,39 @@ export default function AdminReviews() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Quotation No #{quotation?.id}</DialogTitle>
+                  <DialogTitle>review No #{review?.id}</DialogTitle>
                 </DialogHeader>
                 <div className="p-4 bg-gray-200 rounded-lg max-h-80 overflow-y-auto">
                   <p className="mb-2 font-semibold">ID:</p>
-                  <p className="mb-2 font-bold">{quotation?.id}</p>
-                  <p className="mb-2 font-semibold">Phone Number:</p>
-                  <p className="mb-2 font-bold">{quotation?.phone_number}</p>
+                  <p className="mb-2 font-bold">{review?.id}</p>
+
                   <p className="mb-2 font-semibold">Status:</p>
-                  <p className="mb-2 font-bold">{quotation?.status}</p>
+                  <p className="mb-2 font-bold">{review?.status}</p>
                   <p className="mb-2 font-semibold">Message:</p>
-                  <p className="mb-2 font-bold">{quotation?.message}</p>
+                  <p className="mb-2 font-bold">{review?.message}</p>
                   <p className="mb-2 font-semibold">Created At:</p>
-                  <p className="mb-2 font-bold">{quotation?.createdAt}</p>
+                  <p className="mb-2 font-bold">{review?.createdAt}</p>
                   <p className="mb-2 font-semibold">Email:</p>
-                  <p className="mb-2 font-bold">{quotation?.email}</p>
+                  <p className="mb-2 font-bold">{review?.email}</p>
                   <p className="mb-2 font-semibold">Full Name:</p>
-                  <p className="mb-2 font-bold">{quotation?.full_name}</p>
-                  <p className="mb-2 font-semibold">Type:</p>
-                  <p className="mb-2 font-bold">{quotation?.type}</p>
+                  <p className="mb-2 font-bold">{review?.full_name}</p>
+                  <p className="mb-2 font-semibold">Ratings:</p>
+                  <p className="mb-2 font-bold">{review?.rating}</p>
                 </div>
                 <div className="my-4 flex justify-between">
                   <button
                     onClick={() =>
-                      handleMarkAsFulFilled(quotation?.id, quotation?.type)
+                      handleApproveReview(review?.id, review?.type)
                     }
                     className="bg-none border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {fulFilledLoading ? "loading ..." : "Mark as Fulfilled"}
+                    {approvedLoading ? "loading ..." : "Approve"}
                   </button>
                   <button
-                    onClick={() =>
-                      handleMarkAsDeclined(quotation?.id, quotation?.type)
-                    }
+                    onClick={() => handleRejectReview(review?.id, review?.type)}
                     className="bg-none border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {declinedLoading ? "loading ..." : "Mark as Declined"}
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleMarkAsRefunded(quotation?.id, quotation?.type)
-                    }
-                    className="bg-none border border-green-500 text-green-500 hover:bg-green-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
-                  >
-                    {refundedLoading ? "loading ..." : "Mark as Refunded"}
+                    {declinedLoading ? "loading ..." : "Reject"}
                   </button>
                 </div>
               </DialogContent>
@@ -270,40 +244,38 @@ export default function AdminReviews() {
     }
   };
   const renderRejectedReviews = () => {
-    console.log("general_quotations >> ", generalQuotations);
+    console.log("rejected_reviews >> ", rejectedReviews);
     if (loading) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            Fetching Quotations. Please wait...
+            Fetching Reviews. Please wait...
           </TableCell>
         </TableRow>
       );
-    } else if (!generalQuotations || generalQuotations.length === 0) {
+    } else if (!rejectedReviews || rejectedReviews.length === 0) {
       return (
         <TableRow>
           <TableCell colSpan={7} className="text-center">
-            No quotation in store
+            No review in store
           </TableCell>
         </TableRow>
       );
     } else {
-      return generalQuotations.map((quotation, index) => (
+      return rejectedReviews.map((review, index) => (
         <TableRow>
           <TableCell>
-            <div className="font-medium">{quotation?.full_name}</div>
+            <div className="font-medium">{review?.full_name}</div>
             <div className="hidden text-sm text-muted-foreground md:inline">
-              {quotation?.email}
+              {review?.email}
             </div>
           </TableCell>
+          <TableCell className="hidden sm:table-cell">{review?.type}</TableCell>
           <TableCell className="hidden sm:table-cell">
-            {quotation?.type}
-          </TableCell>
-          <TableCell className="hidden sm:table-cell">
-            <QuotationStatusBadge status={quotation?.status} />
+            <ReviewsStatusBadge status={review?.status} />
           </TableCell>
           <TableCell className="hidden md:table-cell">
-            {quotation?.createdAt}
+            {review?.createdAt}
           </TableCell>
           <TableCell className="text-right">
             <Dialog>
@@ -315,50 +287,39 @@ export default function AdminReviews() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Quotation No #{quotation?.id}</DialogTitle>
+                  <DialogTitle>review No #{review?.id}</DialogTitle>
                 </DialogHeader>
                 <div className="p-4 bg-gray-200 rounded-lg max-h-80 overflow-y-auto">
                   <p className="mb-2 font-semibold">ID:</p>
-                  <p className="mb-2 font-bold">{quotation?.id}</p>
-                  <p className="mb-2 font-semibold">Phone Number:</p>
-                  <p className="mb-2 font-bold">{quotation?.phone_number}</p>
+                  <p className="mb-2 font-bold">{review?.id}</p>
+
                   <p className="mb-2 font-semibold">Status:</p>
-                  <p className="mb-2 font-bold">{quotation?.status}</p>
+                  <p className="mb-2 font-bold">{review?.status}</p>
                   <p className="mb-2 font-semibold">Message:</p>
-                  <p className="mb-2 font-bold">{quotation?.message}</p>
+                  <p className="mb-2 font-bold">{review?.message}</p>
                   <p className="mb-2 font-semibold">Created At:</p>
-                  <p className="mb-2 font-bold">{quotation?.createdAt}</p>
+                  <p className="mb-2 font-bold">{review?.createdAt}</p>
                   <p className="mb-2 font-semibold">Email:</p>
-                  <p className="mb-2 font-bold">{quotation?.email}</p>
+                  <p className="mb-2 font-bold">{review?.email}</p>
                   <p className="mb-2 font-semibold">Full Name:</p>
-                  <p className="mb-2 font-bold">{quotation?.full_name}</p>
-                  <p className="mb-2 font-semibold">Type:</p>
-                  <p className="mb-2 font-bold">{quotation?.type}</p>
+                  <p className="mb-2 font-bold">{review?.full_name}</p>
+                  <p className="mb-2 font-semibold">Ratings:</p>
+                  <p className="mb-2 font-bold">{review?.rating}</p>
                 </div>
                 <div className="my-4 flex justify-between">
                   <button
                     onClick={() =>
-                      handleMarkAsFulFilled(quotation?.id, quotation?.type)
+                      handleApproveReview(review?.id, review?.type)
                     }
                     className="bg-none border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {fulFilledLoading ? "loading ..." : "Mark as Fulfilled"}
+                    {approvedLoading ? "loading ..." : "Approve"}
                   </button>
                   <button
-                    onClick={() =>
-                      handleMarkAsDeclined(quotation?.id, quotation?.type)
-                    }
+                    onClick={() => handleRejectReview(review?.id, review?.type)}
                     className="bg-none border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
                   >
-                    {declinedLoading ? "loading ..." : "Mark as Declined"}
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleMarkAsRefunded(quotation?.id, quotation?.type)
-                    }
-                    className="bg-none border border-green-500 text-green-500 hover:bg-green-500 hover:text-white font-bold py-1 px-2 rounded transition-colors duration-300"
-                  >
-                    {refundedLoading ? "loading ..." : "Mark as Refunded"}
+                    {declinedLoading ? "loading ..." : "Reject"}
                   </button>
                 </div>
               </DialogContent>
@@ -371,46 +332,46 @@ export default function AdminReviews() {
 
   // update Quotations
   const handleApproveReview = async (id, type) => {
-    setFulFilledLoading(true);
+    setApprovedLoading(true);
     const status = "approved";
     try {
-      const updateQuotationStatusResponse = await updateQuotationStatusId(
+      const updateReviewStatusResponse = await updateReviewStatusId(
         id,
         status,
         type
       );
-      if (updateQuotationStatusResponse?.success) {
-        alert("successfully updated the status of this quotation");
+      if (updateReviewStatusResponse?.success) {
+        alert("successfully updated the status of this Review");
         console.log(
-          "update_quotation_status_response >> ",
-          updateQuotationStatusResponse
+          "update_Review_status_response >> ",
+          updateReviewStatusResponse
         );
       }
-      setFulFilledLoading(false);
+      setApprovedLoading(false);
     } catch (error) {
-      console.log("an err aoccured trying to mark quotation as fullfiled");
-      setFulFilledLoading(false);
+      console.log("an err aoccured trying to mark Review as fullfiled");
+      setApprovedLoading(false);
     }
   };
   const handleRejectReview = async (id, type) => {
     setDeclinedLoading(true);
     const status = "rejected";
     try {
-      const updateQuotationStatusResponse = await updateQuotationStatusId(
+      const updateReviewStatusResponse = await updateReviewStatusId(
         id,
         status,
         type
       );
-      if (updateQuotationStatusResponse?.success) {
-        alert("successfully updated the status of this quotation");
+      if (updateReviewStatusResponse?.success) {
+        alert("successfully updated the status of this REVIEW");
         console.log(
-          "update_quotation_status_response >> ",
-          updateQuotationStatusResponse
+          "update_REVIEW_status_response >> ",
+          updateReviewStatusResponse
         );
       }
       setDeclinedLoading(false);
     } catch (error) {
-      console.log("an err aoccured trying to mark quotation as Declined");
+      console.log("an err aoccured trying to mark REVIEW as Declined");
       setDeclinedLoading(false);
     }
   };
@@ -463,7 +424,7 @@ export default function AdminReviews() {
                     <TableHead className="sr-only">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>{renderAllQuotations()}</TableBody>
+                <TableBody>{renderAllReviews()}</TableBody>
               </Table>
             </TabsContent>
             <TabsContent value="approved">
