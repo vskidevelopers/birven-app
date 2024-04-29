@@ -91,7 +91,7 @@ export default function AdminReviews() {
       return allReviews?.map((review, index) => (
         <TableRow>
           <TableCell>
-            <div className="font-medium">{review?.full_name}</div>
+            <div className="font-medium">{review?.name}</div>
             <div className="hidden text-sm text-muted-foreground md:inline">
               {review?.email}
             </div>
@@ -124,13 +124,13 @@ export default function AdminReviews() {
                   <p className="mb-2 font-semibold">Status:</p>
                   <p className="mb-2 font-bold">{review?.status}</p>
                   <p className="mb-2 font-semibold">Message:</p>
-                  <p className="mb-2 font-bold">{review?.message}</p>
+                  <p className="mb-2 font-bold">{review?.review}</p>
                   <p className="mb-2 font-semibold">Created At:</p>
                   <p className="mb-2 font-bold">{review?.createdAt}</p>
                   <p className="mb-2 font-semibold">Email:</p>
                   <p className="mb-2 font-bold">{review?.email}</p>
                   <p className="mb-2 font-semibold">Full Name:</p>
-                  <p className="mb-2 font-bold">{review?.full_name}</p>
+                  <p className="mb-2 font-bold">{review?.name}</p>
                   <p className="mb-2 font-semibold">Ratings:</p>
                   <p className="mb-2 font-bold">{review?.rating}</p>
                 </div>
