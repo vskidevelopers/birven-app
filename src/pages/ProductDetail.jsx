@@ -42,7 +42,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div className="container mx-auto flex items-center px-4 py-8 mt-16">
+      <div className="container mx-auto flex flex-col md:flex-row items-center px-4 py-8 mt-16">
         <div className="w-full lg:w-1/2 lg:mr-8">
           <img
             src={product.image}
@@ -61,7 +61,7 @@ export default function ProductDetail() {
           </div>
           <div className="my-4">
             <h2 className="text-xl font-semibold">Tags:</h2>
-            <ul className="list-disc pl-6">
+            <ul className="list-disc pl-6 flex justify-between md:flex-col">
               {tags.map((tag, index) => (
                 <li key={index} className="text-lg">
                   {tag}

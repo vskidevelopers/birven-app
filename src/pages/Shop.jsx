@@ -12,8 +12,8 @@ export default function Shop() {
         title="Shop"
         image="https://media.istockphoto.com/id/1391410249/photo/sports-and-gym-activities.jpg?s=612x612&w=0&k=20&c=1S-hAmT-CkRtdYV_hcKi1lZdQkXAN_mCy3ebIXlUEnE="
       />
-      <div className="w-full flex px-10">
-        <div className="w-1/3">
+      <div className="w-full flex flex-col md:flex-row px-10">
+        <div className="w-full md:w-1/3">
           <h2 className="font-bold text-3xl">Categories</h2>
           <Categories />
         </div>

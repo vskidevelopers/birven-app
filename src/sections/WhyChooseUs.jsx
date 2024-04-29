@@ -3,7 +3,7 @@ import React from "react";
 export default function WhyChooseUs() {
   return (
     <div className="bg-gray-300 py-10">
-      <div className="container mx-auto px-32">
+      <div className="container mx-auto px-4 md:px-32">
         <div className="text-center">
           <h2 className="text-[#24aae1] text-md font-semibold uppercase">
             Why Choose Us

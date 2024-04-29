@@ -20,10 +20,10 @@ const Categories = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col w-full justify-center">
       {categories.map((category) => (
         <div
-          className="m-4 p-4 bg-gray-200 rounded-lg shadow-lg"
+          className="m-4 p-4 bg-gray-200 rounded-lg shadow-lg w-full"
           key={category.id}
         >
           <h2 className="text-lg font-bold mb-2">{category.name}</h2>

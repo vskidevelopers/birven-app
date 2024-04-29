@@ -61,7 +61,7 @@ const Header = () => {
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
+              <span className="sr-only">Birven Supplies</span>
             </Link>
             <Link
               href="#"
@@ -71,25 +71,25 @@ const Header = () => {
               Dashboard
             </Link>
             <Link
-              href="#"
+              to="/admin/quotations"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <ShoppingCart className="h-5 w-5" />
-              Orders
+              Quotation
             </Link>
             <Link
-              href="#"
+              to="/admin/products"
               className="flex items-center gap-4 px-2.5 text-foreground"
             >
               <Package className="h-5 w-5" />
               Products
             </Link>
             <Link
-              href="#"
+              to="/admin/reviews"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Users2 className="h-5 w-5" />
-              Customers
+              Reviews
             </Link>
             <Link
               href="#"

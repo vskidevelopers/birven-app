@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 
 function InfoCard({ title, description, buttonText, buttonLink }) {
   return (
-    <div className="m-4 flex-1 flex">
+    <div className="m-4 flex-1 flex bg-slate-900 md:bg-transparent">
       <div className="border-2 border-white bg-transparent hover:bg-gray-900 bg-opacity-50 hover:bg-opacity-90 transition duration-300 hover:rounded-lg p-8 text-white flex flex-col justify-between">
         <div>
           <h2 className="text-2xl text-center font-bold mb-4 hover:underline">
             {title}
           </h2>
           <hr className="w-4/5 mx-auto" />
-          <p className="text-sm py-3 text-center">{description}</p>
+          <p className="text-sm hidden md:flex py-3 text-center">
+            {description}
+          </p>
         </div>
         <div className="w-full flex justify-center my-3">
           <Link

@@ -39,13 +39,13 @@ export default function NewArrivals() {
             </h1>
           </div>
           <div className="absolute top-0 left-0 h-full w-full flex justify-center md:justify-center items-center opacity-10">
-            <h1 className="text-7xl md:text-9xl font-bold text-nowrap">
+            <h1 className="text-5xl md:text-9xl font-bold text-nowrap">
               New Arrivals
             </h1>
           </div>
         </div>
         <br />
-        <div className="px-20 w-full">
+        <div className="px-2 md:px-20 w-full">
           <Carousel
             opts={{
               align: "start",

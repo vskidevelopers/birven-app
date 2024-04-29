@@ -25,14 +25,14 @@ export default function InfoBannerDivider() {
     },
   ];
   return (
-    <div>
+    <div className="overflow-auto scroll-snap-type-y">
       <div
-        className="bg-cover bg-center h-96 flex items-center"
+        className="bg-cover bg-center h-96 flex items-center flex-nowrap"
         style={{
           backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/986/551/672/ass-pose-model-girl-figure-hd-wallpaper-preview.jpg')`,
         }}
       >
-        <div className="container mx-auto px-4 flex justify-center">
+        <div className="container absolute h-80 overflow-y-auto flex-col md:flex-row mx-auto px-4 flex flex-nowrap justify-center items-center">
           {infoData.map((info, index) => (
             <InfoCard
               key={index}

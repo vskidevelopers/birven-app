@@ -4,7 +4,7 @@ import GenderDividerCard from "@/components/GenderDividerCard";
 export default function GenderDeciderDiv() {
   return (
     <div className="bg-gray-100 py-12 px-10 w-full">
-      <div className="flex justify-around">
+      <div className="flex flex-col md:flex-row  md:justify-around ">
         <GenderDividerCard
           backgroundImage="url(https://www.mensjournal.com/.image/t_share/MTk2MTM3MzcxNDQyOTQ3MjE3/6-rowing-machine.jpg)"
           gender="Men"

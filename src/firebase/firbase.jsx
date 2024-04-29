@@ -542,3 +542,119 @@ export const useReviewsFunctions = () => {
     getAllReviewsbyStatus,
   };
 };
+
+// NEWSLETTERS
+export const useNewslettersFunctions = () => {
+  const addNewsletter = async (data) => {
+    const newslettersCollectionRef = collection(db, "Newsletters");
+    try {
+      const newNewsletterRef = doc(newslettersCollectionRef);
+      await setDoc(newNewsletterRef, data);
+      return { success: true, message: "Newsletter added successfully" };
+    } catch (error) {
+      return { success: false, message: "Failed to add the Newsletter" };
+    }
+  };
+
+  const getAllNewsletters = async () => {
+    const newslettersCollectionRef = collection(db, "Newsletters");
+
+    const newslettersSnapshot = await getDocs(newslettersCollectionRef);
+
+    if (newslettersSnapshot?.empty) {
+      console.log("No newsletter exists in the selected category");
+      return {
+        success: false,
+        data: [],
+        message: "No newsletter exists in the selected category",
+      };
+    } else {
+      console.log(
+        "newslettersSnapshot from getAllNewsletters >> ",
+        newslettersSnapshot
+      );
+      const newslettersData = newslettersSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: newslettersData,
+        message: "Newsletters exist in the selected category",
+      };
+    }
+  };
+
+  const updateNewsletterStatusId = async (id, status) => {
+    console.log(`newsletter_id : ${id} || Status : ${status}`);
+    const newslettersCollectionRef = doc(db, "Newsletters", id);
+    try {
+      const newsletterToUpdateSnapShot = await getDoc(newslettersCollectionRef);
+      if (newsletterToUpdateSnapShot.exists()) {
+        console.log(
+          "newsletter_found_and_ready_for_update >> ",
+          newsletterToUpdateSnapShot
+        );
+        await updateDoc(newslettersCollectionRef, {
+          status: status,
+        });
+        return {
+          success: true,
+          message: "Newsletter updated Successfully",
+          status: status,
+        };
+      }
+    } catch (error) {
+      console.log("error occurred trying to update a newsletter");
+      return {
+        success: false,
+        message: "Failed to update the Newsletter",
+        error: error,
+      };
+    }
+  };
+
+  const getAllNewslettersByStatus = async (status) => {
+    const newslettersCollectionRef = collection(db, "Newsletters");
+    const newslettersCollectionQuery = query(
+      newslettersCollectionRef,
+      where("status", "==", status)
+    );
+    try {
+      const newsletterToUpdateSnapshot = await getDocs(
+        newslettersCollectionQuery
+      );
+      console.log(
+        "newsletter_found_and_ready_for_update >> ",
+        newsletterToUpdateSnapshot
+      );
+      const newslettersSnapshotData = newsletterToUpdateSnapshot.docs.map(
+        (doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })
+      );
+      return {
+        success: true,
+        message: "Newsletter updated Successfully",
+        status: status,
+        data: newslettersSnapshotData,
+      };
+    } catch (error) {
+      console.log("error occurred trying to Fetch newsletters");
+      return {
+        success: false,
+        message: "Failed to get the Newsletters",
+        error: error,
+        data: null,
+      };
+    }
+  };
+
+  return {
+    addNewsletter,
+    getAllNewsletters,
+    updateNewsletterStatusId,
+    getAllNewslettersByStatus,
+  };
+};

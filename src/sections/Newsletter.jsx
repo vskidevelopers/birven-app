@@ -1,21 +1,57 @@
+import { useNewslettersFunctions } from "@/firebase/firbase";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Newsletter() {
   const form = useRef();
   const { register, handleSubmit, errors, reset } = useForm();
+  const { addNewsletter } = useNewslettersFunctions();
   const [loading, setLoading] = useState(false);
-  const onSubmit = (data) => {
+  const currentDate = new Date();
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short",
+  };
+
+  const formattedDate = currentDate.toLocaleString("en-US", options);
+
+  const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data);
-    setTimeout(() => {
+
+    const newsletterSubmissionData = {
+      ...data,
+      createdAt: formattedDate,
+      subscriptionStatus: "active",
+    };
+    console.log("newsletter_submission_data >> ");
+    try {
+      const addNewsletterResponse = await addNewsletter(
+        newsletterSubmissionData
+      );
+      if (addNewsletterResponse?.success) {
+        alert("you have successfully subscribed to our Newsletters");
+        setLoading(false);
+      } else {
+        alert(
+          "an error occured while saving your email. Please try again later."
+        );
+        setLoading(false);
+      }
+    } catch (error) {
+      console.warn(error);
+      console.log("An Error Occurred! Try Again Later.");
       setLoading(false);
-      reset();
-    }, 1000);
+    }
+    reset();
   };
   return (
     <div>
-      <div className=" pr-20 pl-0 ">
+      <div className="pr-0 md:pr-20 pl-0 ">
         <div className="container px-0 md:mx-auto flex flex-wrap md:flex-nowrap">
           <div
             className="relative bg-cover bg-center h-96 flex items-center w-full md:w-2/3"
