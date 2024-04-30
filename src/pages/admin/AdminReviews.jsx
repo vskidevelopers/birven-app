@@ -118,20 +118,34 @@ export default function AdminReviews() {
                   <DialogTitle>review No #{review?.id}</DialogTitle>
                 </DialogHeader>
                 <div className="p-4 bg-gray-200 rounded-lg max-h-80 overflow-y-auto">
-                  <p className="mb-2 font-semibold">ID:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    ID:
+                  </p>
                   <p className="mb-2 font-bold">{review?.id}</p>
 
-                  <p className="mb-2 font-semibold">Status:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Status:
+                  </p>
                   <p className="mb-2 font-bold">{review?.status}</p>
-                  <p className="mb-2 font-semibold">Message:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Message:
+                  </p>
                   <p className="mb-2 font-bold">{review?.review}</p>
-                  <p className="mb-2 font-semibold">Created At:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Created At:
+                  </p>
                   <p className="mb-2 font-bold">{review?.createdAt}</p>
-                  <p className="mb-2 font-semibold">Email:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Email:
+                  </p>
                   <p className="mb-2 font-bold">{review?.email}</p>
-                  <p className="mb-2 font-semibold">Full Name:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Full Name:
+                  </p>
                   <p className="mb-2 font-bold">{review?.name}</p>
-                  <p className="mb-2 font-semibold">Ratings:</p>
+                  <p className="mb-2 font-semibold underline text-green-600">
+                    Ratings:
+                  </p>
                   <p className="mb-2 font-bold">{review?.rating}</p>
                 </div>
                 <div className="my-4 flex justify-around ">

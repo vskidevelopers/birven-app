@@ -17,7 +17,7 @@ export default function QuotationDivider() {
     <div className="relative">
       {/* Background Image */}
       <div
-        className=" h-80 md:h-64 bg-cover bg-center relative"
+        className=" h-80 md:h-52 bg-cover bg-center relative"
         style={{
           backgroundImage:
             "url('https://t3.ftcdn.net/jpg/02/18/65/58/360_F_218655870_yaQvQxD9n4mFIUFIx082pmhP4PqC4Elt.jpg')",
@@ -26,8 +26,8 @@ export default function QuotationDivider() {
         {/* Black Shade Overlay */}
         <div className="absolute inset-0 bg-[#24aae1]/80"></div>
       </div>
-      <div className="absolute top-2 md:relative container mx-auto px-5 py-4 md:px-20 text-white">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="absolute top-2 container mx-auto px-5 py-4 md:py-10 md:px-20 text-white">
+        <div className="flex flex-col md:flex-row justify-between  h-full items-center">
           <div className="w-full md:w-3/5 mb-4 md:mb-0">
             <h2 className="text-center md:text-left text-2xl md:text-3xl font-bold capitalize">
               Achieve Your Fitness Goals with Expert Guidance
@@ -42,7 +42,7 @@ export default function QuotationDivider() {
           <div className="w-full md:w-auto">
             <button
               onClick={openModal}
-              className="w-full bg-white text-[#FDB715] md:border md:border-white text-md md:text-white hover:text-black hover:border-white hover:bg-[rgb(0,162,255)] py-4 px-8"
+              className="w-full border border-white text-white md:border md:border-white text-md md:text-white hover:text-black hover:border-white hover:bg-[rgb(0,162,255)] py-4 px-8"
             >
               Request a quote
             </button>

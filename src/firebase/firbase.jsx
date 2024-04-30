@@ -176,9 +176,10 @@ export const useProductFunctions = () => {
     const productSnap = await getDoc(productItemRef);
     if (productSnap.exists()) {
       console.log("product_data >> ", productSnap?.data());
+      const productData = { ...productSnap?.data(), id: id };
       return {
         success: true,
-        data: productSnap.data(),
+        data: productData,
         message: "product_found",
       };
     } else {

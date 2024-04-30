@@ -29,7 +29,7 @@ export default function Reviews() {
           className="mySwiper h-full w-5/6"
         >
           <SwiperSlide>
-            <div className="py-10 md:py-20 md:px-28 ">
+            <div className="py-10 md:px-28 ">
               <div className="flex justify-center py-3">
                 <StarIcon className="h-4 w-4 text-emerald-900" />
                 <StarIcon className="h-4 w-4 text-emerald-900" />
@@ -53,8 +53,10 @@ export default function Reviews() {
               </div>
             </div>
           </SwiperSlide>
+
+          {/* swiper */}
           <SwiperSlide>
-            <div className="py-10 md:py-20 md:px-28">
+            <div className="py-10 md:px-28">
               <div className="flex justify-center py-3">
                 <StarIcon className="h-4 w-4 text-emerald-900" />
                 <StarIcon className="h-4 w-4 text-emerald-900" />
@@ -79,7 +81,7 @@ export default function Reviews() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="py-10 md:py-20 md:px-28">
+            <div className="py-10 md:px-28">
               <div className="flex justify-center py-3">
                 <StarIcon className="h-4 w-4 text-emerald-900" />
                 <StarIcon className="h-4 w-4 text-emerald-900" />

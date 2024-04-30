@@ -189,10 +189,10 @@ export default function AdminProducts() {
         <div className="flex items-center">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="active">Active</TabsTrigger>
-            <TabsTrigger value="draft">Draft</TabsTrigger>
-            <TabsTrigger value="archived" className="hidden sm:flex">
-              Archived
+            <TabsTrigger value="sale">Sale</TabsTrigger>
+            <TabsTrigger value="new">New</TabsTrigger>
+            <TabsTrigger value="out-of-stock" className="hidden sm:flex">
+              Out Of Stock
             </TabsTrigger>
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
@@ -271,9 +271,9 @@ export default function AdminProducts() {
                   Showing{" "}
                   <strong>
                     {itemOffset + 1}–
-                    {lastCount > products.length ? products.length : lastCount}
+                    {lastCount > products?.length ? products.length : lastCount}
                   </strong>{" "}
-                  of <strong>{products.length}</strong> products
+                  of <strong>{products?.length}</strong> products
                 </div>
                 <div className=" flex justify-end my-4">
                   <Pagination

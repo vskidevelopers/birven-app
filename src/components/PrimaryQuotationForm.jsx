@@ -26,6 +26,7 @@ export default function QuotationForm({ product }) {
   const formattedDate = currentDate.toLocaleString("en-US", options);
 
   const onSubmit = async (data) => {
+    console.log("product data >> ", product);
     setLoading(true);
     const primaryQuotationData = {
       ...data,
