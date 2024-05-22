@@ -70,7 +70,7 @@ export default function Footer() {
                 />
                 <CheckListItem
                   list={true}
-                  listItem={["+254 703 113 115"]}
+                  listItem={["+254 769 324 258"]}
                   icon={<PhoneIcon className="h-4 text-white" />}
                 />
                 <CheckListItem
