@@ -20,6 +20,7 @@ import { AuthProvider } from "./auth/AuthContext";
 import PrivateRoutes from "./auth/PrivateRoutes";
 import AdminQuotations from "./pages/admin/AdminQuotations";
 import AdminReviews from "./pages/admin/AdminReviews";
+import AdminTeams from "./pages/admin/AdminTeams";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="quotations" element={<AdminQuotations />} />
+          <Route path="teams" element={<AdminTeams />} />
           <Route path="reviews" element={<AdminReviews />} />
         </Route>
       </Route>

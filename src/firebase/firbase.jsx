@@ -659,3 +659,238 @@ export const useNewslettersFunctions = () => {
     getAllNewslettersByStatus,
   };
 };
+
+// TEAMS
+export const useTeamFunctions = () => {
+  const [teamMemberImageUploadProgress, setTeamMemberImageUploadProgress] =
+    useState(0);
+  const [teamMemberImageURL, setTeamMemberImageURL] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const teamsCollectionRef = collection(db, "Teams");
+
+  const uploadTeamMemberImage = async (file) => {
+    const result = {
+      data: null,
+      status: "pending",
+    };
+
+    console.log("uploading_team_member_image >>", file);
+
+    // Upload file and metadata to the object 'images/mountains.jpg'
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const storageRef = ref(storage, "teamImages/" + file.name);
+
+    try {
+      setLoading(true);
+      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("upload_is " + progress + "% done");
+          setTeamMemberImageUploadProgress(
+            parseInt(parseFloat(progress).toFixed(0))
+          );
+
+          switch (snapshot.state) {
+            case "paused":
+              console.log("upload_is_paused");
+              break;
+            case "running":
+              console.log("upload_is_running");
+              break;
+          }
+        },
+        (error) => {
+          // Handle errors
+          result.status = "error";
+          result.error = error;
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              setTeamMemberImageURL(downloadURL);
+              setLoading(false);
+              // Update the result object with the download URL and status
+              result.data = downloadURL;
+              result.status = "success";
+            })
+            .catch((error) => {
+              // Handle errors when getting the download URL
+              result.status = "error";
+              result.error = error;
+            });
+        }
+      );
+    } catch (err) {
+      // Handle any other errors that may occur
+      console.log("the_following_error_occurred >>", err);
+      result.status = "error";
+      result.error = err;
+    }
+
+    return result; // Return the result object
+  };
+
+  const addTeamMember = async (memberData) => {
+    try {
+      const newTeamMemberRef = doc(teamsCollectionRef);
+      await setDoc(newTeamMemberRef, memberData);
+      return {
+        collection: "teams",
+        data: memberData,
+        success: true,
+        message: "New Team Member added successfully",
+      };
+    } catch (error) {
+      console.log("error in adding team member >>> ", error);
+      return {
+        collection: "teams",
+        success: false,
+        message: `Failed to add the new team member ${error}`,
+      };
+    }
+  };
+
+  const getAllTeamMembers = async () => {
+    const teamMembersSnapshot = await getDocs(teamsCollectionRef);
+
+    if (teamMembersSnapshot?.empty) {
+      console.log("No team member exists in the selected collection");
+      return {
+        success: false,
+        data: [],
+        message: "No team member exists in the database",
+      };
+    } else {
+      console.log(
+        "teamMembersSnapshot from getAllTeamMembers >> ",
+        teamMembersSnapshot
+      );
+      const teamMembersData = teamMembersSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: teamMembersData,
+        message: "Mmembers exist in the database",
+      };
+    }
+  };
+
+  const fetchTeamMemberDetail = async (id) => {
+    const teamMemberItemRef = doc(db, "Teams", id);
+    const teamMemberSnap = await getDoc(teamMemberItemRef);
+    if (teamMemberSnap.exists()) {
+      console.log("teamMember_data >> ", teamMemberSnap?.data());
+      const teamMemberData = { ...teamMemberSnap?.data(), id: id };
+      return {
+        success: true,
+        data: teamMemberData,
+        message: "team_member_found",
+      };
+    } else {
+      console.log("No such document!");
+      return {
+        success: false,
+        data: null,
+        message: "team_member_not_found",
+      };
+    }
+  };
+
+  const fetchTeamLeaderDetail = async () => {
+    const teamLeaderItemRef = collection(db, "Teams");
+    const teamLeaderQuery = query(
+      teamLeaderItemRef,
+      where("designation", "in", ["Director", "Leader", "Founder"])
+    );
+    const teamLeaderSnap = await getDocs(teamLeaderQuery);
+    console.log("teamLeader_data >> ", teamLeaderSnap);
+    if (!teamLeaderSnap.empty) {
+      const teamLeaderData = teamLeaderSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: teamLeaderData,
+        message: "team_leader_member_found",
+      };
+    } else {
+      console.log("No such document!");
+      return {
+        success: false,
+        data: null,
+        message: "team_member_not_found",
+      };
+    }
+  };
+
+  const fetchTeamMembersDetail = async () => {
+    const teamLeaderItemRef = collection(db, "Teams");
+    const teamLeaderQuery = query(
+      teamLeaderItemRef,
+      where("designation", "not-in", ["Director", "Leader", "Founder"])
+    );
+    const teamLeaderSnap = await getDocs(teamLeaderQuery);
+    console.log("teamLeader_data >> ", teamLeaderSnap);
+    if (!teamLeaderSnap.empty) {
+      const teamLeaderData = teamLeaderSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return {
+        success: true,
+        data: teamLeaderData,
+        message: "team_members_member_found",
+      };
+    } else {
+      console.log("No such document!");
+      return {
+        success: false,
+        data: null,
+        message: "team_members_not_found",
+      };
+    }
+  };
+
+  const deleteTeamMember = async (id) => {
+    const teamMemberSnap = await getDoc(teamsCollectionRef);
+    if (!teamMemberSnap.exists()) {
+      return {
+        success: false,
+        message: "this_member_does_not_exist",
+      };
+    } else {
+      console.log("team_member_found");
+      console.log("delete_initialized");
+      await deleteDoc(teamsCollectionRef);
+      return {
+        success: true,
+        message: "team_member_deleted",
+      };
+    }
+  };
+
+  return {
+    addTeamMember,
+    getAllTeamMembers,
+    fetchTeamMemberDetail,
+    deleteTeamMember,
+    uploadTeamMemberImage,
+    fetchTeamLeaderDetail,
+    fetchTeamMembersDetail,
+    loading,
+    teamMemberImageUploadProgress,
+    teamMemberImageURL,
+  };
+};
