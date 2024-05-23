@@ -99,68 +99,73 @@ const TeamMemberCard = ({ member }) => {
               <span className="sr-only">View More</span>
             </Button>
           </DialogTrigger>
+
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{member.name}</DialogTitle>
-            </DialogHeader>
-            <div className="p-4 bg-gray-200 rounded-lg">
-              <p>
-                <strong>Full Name:</strong> {member.name}
-              </p>
-              <p>
-                <strong>Designation:</strong> {member.designation}
-              </p>
-              <p>
-                <strong>Bio:</strong> {member.bio}
-              </p>
-              {member && (
-                <div>
-                  {member.instagram && (
-                    <a
-                      href={member.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="link">Instagram</Button>
-                    </a>
-                  )}
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="link">LinkedIn</Button>
-                    </a>
-                  )}
-                  {member.facebook && (
-                    <a
-                      href={member.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="link">Facebook</Button>
-                    </a>
-                  )}
-                  {member.twitter && (
-                    <a
-                      href={member.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="link">X (formerly Twitter)</Button>
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="flex justify-end mt-4">
-              <Button
-                variant="destructive"
-                onClick={() => handleDelete(member.id)}
-              >
-                Delete This Member?
-              </Button>
+            <div className="overflow-auto h-3/4 md:h-full ">
+              <DialogHeader>
+                <DialogTitle>{member.name}</DialogTitle>
+              </DialogHeader>
+
+              <div className="p-4 bg-gray-200 rounded-lg">
+                <p>
+                  <strong>Full Name:</strong> {member.name}
+                </p>
+                <p>
+                  <strong>Designation:</strong> {member.designation}
+                </p>
+                <p>
+                  <strong>Bio:</strong> {member.bio}
+                </p>
+                {member && (
+                  <div>
+                    {member.instagram && (
+                      <a
+                        href={member.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="link">Instagram</Button>
+                      </a>
+                    )}
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="link">LinkedIn</Button>
+                      </a>
+                    )}
+                    {member.facebook && (
+                      <a
+                        href={member.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="link">Facebook</Button>
+                      </a>
+                    )}
+                    {member.twitter && (
+                      <a
+                        href={member.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="link">X (formerly Twitter)</Button>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end mt-4">
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(member.id)}
+                >
+                  Delete This Member?
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
