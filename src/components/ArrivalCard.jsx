@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import { HeartIcon, ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 import {
   Dialog,
@@ -107,18 +108,33 @@ export default function ArrivalCard({ product }) {
                     <span className="font-bold">Price: Ksh </span>
                     {product.price}
                   </p>
-                  <p>
-                    <span className="font-bold">Instagram: </span>
-                    <a href={product.instagramLink}>{product.instagramLink}</a>
-                  </p>
-                  <p>
-                    <span className="font-bold">Twitter: </span>
-                    <a href={product.twitterLink}>{product.twitterLink}</a>
-                  </p>
-                  <p>
-                    <span className="font-bold">Facebook: </span>
-                    <a href={product.facebookLink}>{product.facebookLink}</a>
-                  </p>
+                  <div>
+                    <p className="font-bold">Social Plaform links </p>
+                    <div className="flex w-1/2 justify-between mt-1">
+                      <button
+                        onClick={() =>
+                          window.open(product.facebookLink, "_blank")
+                        }
+                      >
+                        <Facebook className="hover:text-[#007bff]" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          window.open(product.instagramLink, "_blank")
+                        }
+                      >
+                        <Instagram className="hover:text-[#ff1717]" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          window.open(product.twitterLink, "_blank")
+                        }
+                      >
+                        {" "}
+                        <Twitter className="hover:text-[#0026ff]" />
+                      </button>
+                    </div>
+                  </div>
                 </DialogDescription>
               </DialogHeader>
             </div>

@@ -50,6 +50,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddProductForm from "@/components/admin/AddProductForm ";
 import { useEffect, useState } from "react";
 import { useProductFunctions } from "@/firebase/firbase";
+import EditProductForm from "@/components/admin/EditProductForm";
 
 export default function AdminProducts() {
   const [loading, setLoading] = useState(false);
@@ -91,9 +92,6 @@ export default function AdminProducts() {
     }
   }, [itemOffset, itemsPerPage, products]);
 
-  const handleEditProduct = (id) => {
-    console.log("ready to edit product #", id);
-  };
   const handleDeleteProduct = async (id) => {
     console.log("ready to edit product #", id);
     const isConfirmed = window.confirm("Are you sure you want to delete?");
@@ -156,27 +154,42 @@ export default function AdminProducts() {
           </TableCell>
           <TableCell>
             {/* Dropdown menu actions */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button aria-haspopup="true" size="icon" variant="ghost">
-                  <MoreHorizontal className="h-4 w-4" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => handleEditProduct(product.id)}>
-                  <Pencil className="text-sky-700 mr-1 w-5" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteProduct(product.id)}
-                >
-                  <Trash2 className="text-red-700 mr-1 w-5" />
-                  delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Dialog>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button aria-haspopup="true" size="icon" variant="ghost">
+                    <MoreHorizontal className="h-4 w-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <DialogTrigger asChild>
+                      <div className="flex">
+                        <Pencil className="text-sky-700 mr-1 w-5" />
+                        Edit
+                      </div>
+                    </DialogTrigger>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleDeleteProduct(product.id)}
+                  >
+                    <Trash2 className="text-red-700 mr-1 w-5" />
+                    delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="text-center py-9">
+                    Product Edit Form
+                  </DialogTitle>
+                  <DialogTitle>Product Name : {product?.name} </DialogTitle>
+                </DialogHeader>
+                <EditProductForm product={product} />
+              </DialogContent>
+            </Dialog>
           </TableCell>
         </TableRow>
       ));

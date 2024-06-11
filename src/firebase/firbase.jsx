@@ -245,7 +245,7 @@ export const useProductFunctions = () => {
 
       return {
         success: true,
-        data: `updated_product_item : #${bookingId}`,
+        data: `updated_product_item : #${id}`,
       };
     } catch (error) {
       console.error("the_following_error_occured_during_updating_prouct_item");
