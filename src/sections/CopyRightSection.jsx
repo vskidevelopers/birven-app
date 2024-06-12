@@ -9,7 +9,7 @@ export default function CopyRightSection() {
             <p>
               &copy; 2024{" "}
               <Link to="admin"> BIRVEN SUPPLIES COMPANY LIMITED </Link> All
-              rights Preserved.
+              rights reserved.
             </p>
           </div>
 
