@@ -34,7 +34,7 @@ export default function Reviews() {
             prevEl: ".swiper-button-prev",
           }}
           autoplay={{
-            delay: 2500,
+            delay: 5000,
             disableOnInteraction: false,
           }}
           spaceBetween={30}

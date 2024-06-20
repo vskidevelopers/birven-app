@@ -1,4 +1,12 @@
-import { Dialog, Transition } from "@headlessui/react";
+// import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useState, Fragment, useRef } from "react";
 import QuotationForm from "@/components/GeneralQuotationForm";
 
@@ -15,41 +23,41 @@ export default function QuotationDivider() {
 
   return (
     <div className="relative">
-      {/* Background Image */}
-      <div
-        className=" h-80 md:h-52 bg-cover bg-center relative"
-        style={{
-          backgroundImage:
-            "url('https://t3.ftcdn.net/jpg/02/18/65/58/360_F_218655870_yaQvQxD9n4mFIUFIx082pmhP4PqC4Elt.jpg')",
-        }}
-      >
-        {/* Black Shade Overlay */}
-        <div className="absolute inset-0 bg-[#24aae1]/80"></div>
-      </div>
-      <div className="absolute top-2 container mx-auto px-5 py-4 md:py-10 md:px-20 text-white">
-        <div className="flex flex-col md:flex-row justify-between  h-full items-center">
-          <div className="w-full md:w-3/5 mb-4 md:mb-0">
-            <h2 className="text-center md:text-left text-2xl md:text-3xl font-bold capitalize">
-              Achieve Your Fitness Goals with Expert Guidance
-            </h2>
-            <p className="text-center md:text-left">
-              Unlock Your Full Potential with Tailored Fitness Solutions - Take
-              the Next Step and Start Your Journey to a Healthier You Today by
-              requesting a quote.
-            </p>
-          </div>
-
-          <div className="w-full md:w-auto">
-            <button
-              onClick={openModal}
-              className="w-full border border-white text-white md:border md:border-white text-md md:text-white hover:text-black hover:border-white hover:bg-[rgb(0,162,255)] py-4 px-8"
-            >
-              Request a quote
-            </button>
-          </div>
+      <Dialog>
+        {/* Background Image */}
+        <div
+          className=" h-80 md:h-52 bg-cover bg-center relative"
+          style={{
+            backgroundImage:
+              "url('https://t3.ftcdn.net/jpg/02/18/65/58/360_F_218655870_yaQvQxD9n4mFIUFIx082pmhP4PqC4Elt.jpg')",
+          }}
+        >
+          {/* Black Shade Overlay */}
+          <div className="absolute inset-0 bg-[#24aae1]/80"></div>
         </div>
-      </div>{" "}
-      <Transition appear show={isOpen} as={Fragment}>
+        <div className="absolute z-40 top-2 container mx-auto px-5 py-4 md:py-10 md:px-20 text-white">
+          <div className="flex flex-col md:flex-row justify-between  h-full items-center">
+            <div className="w-full md:w-3/5 mb-4 md:mb-0">
+              <h2 className="text-center md:text-left text-2xl md:text-3xl font-bold capitalize">
+                Achieve Your Fitness Goals with Expert Guidance
+              </h2>
+              <p className="text-center md:text-left">
+                Unlock Your Full Potential with Tailored Fitness Solutions -
+                Take the Next Step and Start Your Journey to a Healthier You
+                Today by requesting a quote.
+              </p>
+            </div>
+
+            <div className="w-full md:w-auto">
+              <DialogTrigger>
+                <button className="w-full border border-white text-white md:border md:border-white text-md md:text-white hover:text-black hover:border-white hover:bg-[rgb(0,162,255)] py-4 px-8">
+                  Request a quote
+                </button>
+              </DialogTrigger>
+            </div>
+          </div>
+        </div>{" "}
+        {/* <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-50" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -105,7 +113,19 @@ export default function QuotationDivider() {
             </Transition.Child>
           </div>
         </Dialog>
-      </Transition>
+      </Transition> */}
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="text-lg font-medium text-center text-gray-900">
+              GENERAL QUOTATION REQUEST FORM
+            </DialogTitle>
+            <DialogTitle className="text-center py-9">
+              Enter your details and we'll reach back
+            </DialogTitle>
+          </DialogHeader>
+          <QuotationForm />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
