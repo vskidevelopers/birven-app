@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArrivalCard from "./ArrivalCard";
 import Pagination from "./Pagination";
-import { mockData } from "../utils/mockProducts";
+
 import { useProductFunctions } from "@/firebase/firbase";
 
 export default function ShopGrid() {

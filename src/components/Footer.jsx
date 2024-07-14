@@ -51,7 +51,7 @@ export default function Footer() {
       <footer className="relative bg-gray-900 text-white py-8">
         <div className="absolute inset-0 bg-black/50 z-0"></div>
         <div className="absolute z-1 flex items-center justify-center h-full w-full">
-          <div className="w-32 h-32 bg-cover bg-center shadow-lg">
+          <div className=" w-48 h-32 bg-cover bg-center shadow-lg">
             <img
               src={logo}
               alt="Brand Logo"
